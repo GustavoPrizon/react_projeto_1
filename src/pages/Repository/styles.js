@@ -103,7 +103,7 @@ export const IssuesList = styled.ul`
   }
 `;
 
-export const IssueFilter = styled.div`
+export const IssuesFilter = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 15px;

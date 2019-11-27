@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 import api from '../../services/api';
 
 import Container from '../../components/Container';
-import { Loading, Owner, IssuesList, PageActions } from './styles';
+import {
+  Loading,
+  Owner,
+  IssuesList,
+  PageActions,
+  IssuesFilter,
+} from './styles';
 
 export default class Repository extends Component {
   static propTypes = {
@@ -68,6 +74,11 @@ export default class Repository extends Component {
     this.setState({ issues: response.data });
   };
 
+  handleFilter = async filterIndex => {
+    await this.setState({ filterIndex });
+    this.loadIssues();
+  };
+
   handlePage = async action => {
     const { page } = this.state;
     await this.setState({
@@ -100,6 +111,17 @@ export default class Repository extends Component {
         </Owner>
 
         <IssuesList>
+          <IssuesFilter active={filterIndex}>
+            {filters.map((filter, index) => (
+              <button
+                type="button"
+                key={filter.label}
+                onClick={() => this.handleFilter(index)}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </IssuesFilter>
           {issues.map(issue => (
             <li key={String(issue.id)}>
               <img src={issue.user.avatar_url} alt={issue.user.login} />
